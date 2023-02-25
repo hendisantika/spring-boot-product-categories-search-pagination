@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Product Category Data</title>
+
+    <link th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "
+          th:rel="stylesheet"/>
+
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">Product Category Data</a>
+        <button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-target="#navbarResponsive"
+                data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a class="nav-link" href="#">Home
+                    <span class="sr-only">(current)</span>
+                </a></li>
+                <li class="nav-item"><a class="nav-link" href="product">Create
+                    Product</a></li>
+                <li class="nav-item"><a class="nav-link" href="category">Create
+                    Category</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 mt-5 mb-5">
+            <form class="form-horizontal" method="post"
+                  th:action="@{/product/search}">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Form Name</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Search</label>
+                        <div class="col-md-4">
+                            <input class="form-control input-md" id="searchKey" name="searchKey"
+                                   placeholder="Search" required type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <input class="btn btn-primary" type="submit" value="Search">
+                        </div>
+                        <div class="col-md-4">
+                            <input class="btn btn-primary" id="btnClear" onclick="clearSearch()"
+                                   type="button" value="Clear">
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+
+            <form class="form-horizontal" method="post"
+                  th:action="@{/product/filter}">
+                <fieldset>
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="categoryId">Category</label>
+                        <div class="col-md-4">
+                            <select class="form-control" id="categoryId" name="category">
+                                <option th:each="category : ${categories}"
+                                        th:text="${category.name}" th:value="${category.id}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for=""></label>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary" id="" name="">Save</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <table class="table table-bordered table-responsive-sm"
+                   id="products">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>CATEGORY</th>
+                    <th>DESCRIPTION</th>
+                    <th>UPDATE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products.page}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.category.name}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td><a th:href="@{/product/{id}(id=${product.id})}"><i
+                            class="material-icons">Modify</i></a>
+                </tr>
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation" class="paging">
+                <ul class="pagination" th:if="${products.page.totalPages > 1}">
+                    <li class="page-item"
+                        th:classappend="${!products.paging.isPrevEnabled()? 'disabled' : ''}">
+                        <a class="page-link"
+                           tabindex="-1"
+                           th:href="@{'/?pageNumber=' + ${products.paging.pageNumber - 1}}">Previous</a>
+                    </li>
+                    <th:block th:each="item : ${products.paging.getItems()}">
+                        <li class="page-item"
+                            th:classappend="${item.index == products.paging.pageNumber? 'active' : ''}"
+                            th:if="${item.pageItemType.name() == 'PAGE'}"><a
+                                class="page-link" th:href="@{'/?pageNumber=' + ${item.index}}"
+                                th:text="${item.index}"></a></li>
+                        <li class="page-item disabled"
+                            th:if="${item.pageItemType.name() == 'DOTS'}"><a
+                                class="page-link" href="#">...</a></li>
+                    </th:block>
+                    <li class="page-item"
+                        th:classappend="${!products.paging.isNextEnabled()? 'disabled' : ''}">
+                        <a class="page-link"
+                           th:href="@{'/?pageNumber=' + ${products.paging.pageNumber + 1}}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet">
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
