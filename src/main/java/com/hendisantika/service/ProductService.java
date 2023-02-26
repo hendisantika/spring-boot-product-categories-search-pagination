@@ -34,4 +34,10 @@ public class ProductService {
     public Product saveOrUpdate(Product product) {
         return productRepository.save(product);
     }
+
+    public Paged<Product> filterByCategory(int pageNumber, int size, Integer categoryId) {
+        PageRequest request = PageRequest.of(pageNumber - 1, size, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Product> productPage = productRepository.findByCategoryId(categoryId, request);
+        return new Paged<>(productPage, Paging.of(productPage.getTotalPages(), pageNumber, size));
+    }
 }
