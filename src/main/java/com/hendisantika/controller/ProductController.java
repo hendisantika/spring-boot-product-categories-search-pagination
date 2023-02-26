@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -34,6 +35,15 @@ public class ProductController {
                         @RequestParam(value = "size", required = false, defaultValue = "4") int size, Model model) {
         model.addAttribute("products", productService.getProduct(pageNumber, size));
         model.addAttribute("categories", categoryRepository.findAll());
+        return "index";
+    }
+
+    @PostMapping(value = "/product/filter")
+    public String filterCategory(
+            @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+            @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+            @RequestParam(value = "category") Integer categoryId, Model model) {
+        model.addAttribute("products", productService.filterByCategory(pageNumber, size, categoryId));
         return "index";
     }
 }
