@@ -41,4 +41,9 @@ public class Paging {
             items.add(PageItem.builder().active(pageNumber != i).index(i).pageItemType(PageItemType.PAGE).build());
         }
     }
+
+    public void last(int pageSize) {
+        items.add(PageItem.builder().active(false).pageItemType(PageItemType.DOTS).build());
+        items.add(PageItem.builder().active(true).index(pageSize).pageItemType(PageItemType.PAGE).build());
+    }
 }
