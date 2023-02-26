@@ -46,4 +46,12 @@ public class ProductController {
         model.addAttribute("products", productService.filterByCategory(pageNumber, size, categoryId));
         return "index";
     }
+
+    @PostMapping(value = "/product/search")
+    public String search(@RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+                         @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                         @RequestParam(value = "searchKey") String searchKey, Model model) {
+        model.addAttribute("products", productService.search(pageNumber, size, searchKey));
+        return "index";
+    }
 }
