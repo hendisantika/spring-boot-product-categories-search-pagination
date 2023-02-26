@@ -1,6 +1,7 @@
 package com.hendisantika.controller;
 
 import com.hendisantika.entity.Product;
+import com.hendisantika.exception.RecordNotFoundException;
 import com.hendisantika.repository.CategoryRepository;
 import com.hendisantika.repository.ProductRepository;
 import com.hendisantika.service.ProductService;
@@ -11,9 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 /**
  * Created by IntelliJ IDEA.
@@ -74,5 +78,21 @@ public class ProductController {
             flashMessages.addFlashAttribute("error", "Details are not saved!! Please retry.");
         }
         return "redirect:/";
+    }
+
+    @GetMapping(value = {"/product", "/product/{id}"})
+    public String getAllProducts(Model model, @PathVariable("id") Optional<Integer> id) throws RecordNotFoundException {
+        if (id.isPresent()) {
+            Optional<Product> product = productRepository.findById(id.get());
+            if (product.isPresent()) {
+                model.addAttribute("product", product);
+            } else {
+                throw new RecordNotFoundException("No product record exist for given id : " + id.get());
+            }
+        } else {
+            model.addAttribute("product", new Product());
+        }
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "product_form";
     }
 }
