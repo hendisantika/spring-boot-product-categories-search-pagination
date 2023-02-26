@@ -1,5 +1,7 @@
 package com.hendisantika.service;
 
+import com.hendisantika.bean.Paged;
+import com.hendisantika.bean.Paging;
 import com.hendisantika.entity.Product;
 import com.hendisantika.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
