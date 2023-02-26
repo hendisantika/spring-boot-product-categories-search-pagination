@@ -46,4 +46,9 @@ public class Paging {
         items.add(PageItem.builder().active(false).pageItemType(PageItemType.DOTS).build());
         items.add(PageItem.builder().active(true).index(pageSize).pageItemType(PageItemType.PAGE).build());
     }
+
+    public void first(int pageNumber) {
+        items.add(PageItem.builder().active(pageNumber != 1).index(1).pageItemType(PageItemType.PAGE).build());
+        items.add(PageItem.builder().active(false).pageItemType(PageItemType.DOTS).build());
+    }
 }
