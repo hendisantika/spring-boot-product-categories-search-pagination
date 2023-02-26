@@ -1,14 +1,19 @@
 package com.hendisantika.controller;
 
+import com.hendisantika.entity.Product;
 import com.hendisantika.repository.CategoryRepository;
 import com.hendisantika.repository.ProductRepository;
 import com.hendisantika.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by IntelliJ IDEA.
@@ -53,5 +58,21 @@ public class ProductController {
                          @RequestParam(value = "searchKey") String searchKey, Model model) {
         model.addAttribute("products", productService.search(pageNumber, size, searchKey));
         return "index";
+    }
+
+    @PostMapping("/product/create")
+    public String saveBank(Model model, @Validated @ModelAttribute("product") Product product,
+                           BindingResult bindingResult, RedirectAttributes flashMessages) throws Exception {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("product", product);
+            return "product";
+        }
+        Product optinalProduct = productService.saveOrUpdate(product);
+        if (optinalProduct != null) {
+            flashMessages.addFlashAttribute("success", "Product added Successfully!! ");
+        } else {
+            flashMessages.addFlashAttribute("error", "Details are not saved!! Please retry.");
+        }
+        return "redirect:/";
     }
 }
