@@ -40,4 +40,10 @@ public class ProductService {
         Page<Product> productPage = productRepository.findByCategoryId(categoryId, request);
         return new Paged<>(productPage, Paging.of(productPage.getTotalPages(), pageNumber, size));
     }
+
+    public Paged<Product> search(int pageNumber, int size, String searchKey) {
+        PageRequest request = PageRequest.of(pageNumber - 1, size, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Product> productPage = productRepository.search(searchKey, request);
+        return new Paged<>(productPage, Paging.of(productPage.getTotalPages(), pageNumber, size));
+    }
 }
