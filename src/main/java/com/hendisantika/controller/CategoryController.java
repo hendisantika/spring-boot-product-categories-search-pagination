@@ -6,8 +6,13 @@ import com.hendisantika.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -40,5 +45,21 @@ public class CategoryController {
             model.addAttribute("category", new Category());
         }
         return "category_form";
+    }
+
+    @PostMapping("/category/create")
+    public String saveBank(Model model, @Validated @ModelAttribute("categroy") Category categroy,
+                           BindingResult bindingResult, RedirectAttributes flashMessages) throws Exception {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("category", categroy);
+            return "category";
+        }
+        Category optinalCategory = categoryRepository.save(categroy);
+        if (optinalCategory != null) {
+            flashMessages.addFlashAttribute("success", "Product added Successfully!! ");
+        } else {
+            flashMessages.addFlashAttribute("error", "Details are not saved!! Please retry.");
+        }
+        return "redirect:/";
     }
 }
