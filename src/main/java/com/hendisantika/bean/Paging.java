@@ -1,5 +1,6 @@
 package com.hendisantika.bean;
 
+import com.hendisantika.enums.PageItemType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,4 +35,10 @@ public class Paging {
     private int pageNumber;
 
     private List<PageItem> items = new ArrayList<>();
+
+    public void addPageItems(int from, int to, int pageNumber) {
+        for (int i = from; i < to; i++) {
+            items.add(PageItem.builder().active(pageNumber != i).index(i).pageItemType(PageItemType.PAGE).build());
+        }
+    }
 }
