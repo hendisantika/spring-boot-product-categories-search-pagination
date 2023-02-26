@@ -44,7 +44,7 @@
 
                     <!-- Text input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="textinput">Search</label>
+                        <label class="col-md-4 control-label" for="searchKey">Search</label>
                         <div class="col-md-4">
                             <input class="form-control input-md" id="searchKey" name="searchKey"
                                    placeholder="Search" required type="text">
@@ -52,12 +52,10 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-md-4">
-                            <input class="btn btn-primary" type="submit" value="Search">
-                        </div>
-                        <div class="col-md-4">
-                            <input class="btn btn-primary" id="btnClear" onclick="clearSearch()"
-                                   type="button" value="Clear">
+                        <div class="col-md-6">
+                            <input class="btn btn-info" type="submit" value="Search">
+                            <input class="btn btn-primary" id="btnClear" onclick="location.href='/';" type="button"
+                                   value="Clear">
                         </div>
                     </div>
 

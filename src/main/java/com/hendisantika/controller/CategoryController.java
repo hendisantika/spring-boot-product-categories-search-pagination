@@ -35,9 +35,9 @@ public class CategoryController {
     @GetMapping(value = {"/category", "/category/{id}"})
     public String getCategory(Model model, @PathVariable("id") Optional<Integer> id) throws RecordNotFoundException {
         if (id.isPresent()) {
-            Optional<Category> categroy = categoryRepository.findById(id.get());
-            if (categroy.isPresent()) {
-                model.addAttribute("category", categroy);
+            Optional<Category> category = categoryRepository.findById(id.get());
+            if (category.isPresent()) {
+                model.addAttribute("category", category);
             } else {
                 throw new RecordNotFoundException("No category record exist for given id : " + id.get());
             }
@@ -48,13 +48,13 @@ public class CategoryController {
     }
 
     @PostMapping("/category/create")
-    public String saveBank(Model model, @Validated @ModelAttribute("categroy") Category categroy,
+    public String saveBank(Model model, @Validated @ModelAttribute("category") Category category,
                            BindingResult bindingResult, RedirectAttributes flashMessages) throws Exception {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("category", categroy);
+            model.addAttribute("category", category);
             return "category";
         }
-        Category optinalCategory = categoryRepository.save(categroy);
+        Category optinalCategory = categoryRepository.save(category);
         if (optinalCategory != null) {
             flashMessages.addFlashAttribute("success", "Product added Successfully!! ");
         } else {
