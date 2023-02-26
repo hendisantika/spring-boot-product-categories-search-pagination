@@ -30,4 +30,8 @@ public class ProductService {
         Page<Product> productPage = productRepository.findAll(request);
         return new Paged<>(productPage, Paging.of(productPage.getTotalPages(), pageNumber, size));
     }
+
+    public Product saveOrUpdate(Product product) {
+        return productRepository.save(product);
+    }
 }
