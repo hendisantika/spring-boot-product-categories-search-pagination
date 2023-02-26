@@ -34,3 +34,17 @@ Entity
 3. Change the DB Credentials in `application.properties` file
 4. Run the application: `mvn clean spring-boot:run`
 5. Open your favorite browser: http://localhost:8080
+
+### Image Screen shots
+
+Add category data
+
+![Add category data](img/add-category.png "Add category data")
+
+Add product data
+
+![Add product data](img/add-product.png "Add product data")
+
+Home page
+
+![Home page](img/home.png "Home page")
