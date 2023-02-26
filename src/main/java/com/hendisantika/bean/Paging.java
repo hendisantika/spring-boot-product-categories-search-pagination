@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-product-categories-search-pagination
@@ -29,4 +32,6 @@ public class Paging {
     private boolean prevEnabled;
     private int pageSize;
     private int pageNumber;
+
+    private List<PageItem> items = new ArrayList<>();
 }
