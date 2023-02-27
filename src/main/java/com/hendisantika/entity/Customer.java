@@ -2,7 +2,11 @@ package com.hendisantika.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,9 +19,12 @@ import jakarta.persistence.Id;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
